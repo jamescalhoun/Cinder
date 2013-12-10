@@ -98,7 +98,7 @@ void EarthquakeApp::setup()
 	mPov			= POV( this, ci::Vec3f( 0.0f, 0.0f, 1000.0f ), ci::Vec3f( 0.0f, 0.0f, 0.0f ) );
 	mEarth			= Earth( earthDiffuse, earthNormal, earthMask );
 	
-	parseEarthquakes( "http://earthquake.usgs.gov/earthquakes/catalogs/7day-M2.5.xml" );
+	parseEarthquakes( "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.quakeml" );
 	
 	mEarth.setQuakeLocTip();
 }
@@ -243,17 +243,25 @@ void EarthquakeApp::draw()
 void EarthquakeApp::parseEarthquakes( const string &url )
 {
 	const XmlTree xml( loadUrl( Url( url ) ) );
-	for( XmlTree::ConstIter itemIter = xml.begin( "feed/entry" ); itemIter != xml.end(); ++itemIter ) {
-		string titleLine( itemIter->getChild( "title" ).getValue() );
-		size_t firstComma = titleLine.find( ',' );
-		float magnitude = fromString<float>( titleLine.substr( titleLine.find( ' ' ) + 1, firstComma - 2 ) );
-		string title = titleLine.substr( firstComma + 2 );
+	for( XmlTree::ConstIter itemIter = xml.begin( "q:quakeml/eventParameters/event/origin" ); itemIter != xml.end(); ++itemIter ) {
+//		string titleLine( itemIter->getChild( "title" ).getValue() );
+//		size_t firstComma = titleLine.find( ',' );
+//		float magnitude = fromString<float>( titleLine.substr( titleLine.find( ' ' ) + 1, firstComma - 2 ) );
+//		string title = titleLine.substr( firstComma + 2 );
 
-		istringstream locationString( itemIter->getChild( "georss:point" ).getValue() );
-		Vec2f locationVector;
-		locationString >> locationVector.x >> locationVector.y;
-		
-		mEarth.addQuake( locationVector.x, locationVector.y, magnitude, title );		
+//		istringstream locationString( itemIter->getChild( "georss:point" ).getValue() );
+//		Vec2f locationVector;
+//		locationString >> locationVector.x >> locationVector.y;
+		string longitudeValue( itemIter->getChild( "longitude" ).getValue() );
+		string latitudeValue( itemIter->getChild( "latitude" ).getValue() );
+		string depthValue( itemIter->getChild( "depth" ).getValue() );
+		string time( itemIter->getChild( "time" ).getValue() );
+        float depth = fromString<float>( depthValue);
+        float longitude = fromString<float>( longitudeValue);
+        float latitude = fromString<float>( latitudeValue);
+
+//		mEarth.addQuake( locationVector.x, locationVector.y, magnitude, title );
+		mEarth.addQuake( longitude, latitude, depth, time );
 	}
 	
 	//mEarth.addQuake( 37.7f, -122.0f, 8.6f, "San Francisco" );

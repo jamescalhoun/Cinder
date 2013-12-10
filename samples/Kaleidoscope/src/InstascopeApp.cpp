@@ -21,7 +21,7 @@ static const string TAG = "";		// Instagram tag to search for
 // Instagram Client Id - DO NOT USE THIS ONE!!! 
 // Replace with your own client ID after registering your
 // instagram application here http://instagram.com/developer/register/
-static const string CLIENT_ID = "def20410b5134f7d9b828668775aee4a";	 
+static const string CLIENT_ID = "f6b37d6ce7aa4ab6ab170f5018495ee2";	 
 
 static const bool PREMULT = false;
 

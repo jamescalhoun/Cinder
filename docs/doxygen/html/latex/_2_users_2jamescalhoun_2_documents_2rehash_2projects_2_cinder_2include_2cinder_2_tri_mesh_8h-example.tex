@@ -1,0 +1,25 @@
+\hypertarget{_2_users_2jamescalhoun_2_documents_2rehash_2projects_2_cinder_2include_2cinder_2_tri_mesh_8h-example}{\section{/\-Users/jamescalhoun/\-Documents/rehash/projects/\-Cinder/include/cinder/\-Tri\-Mesh.\-h}
+}
+The Tri\-Mesh allows you to create a series of vertices linked into a mesh.\begin{DoxyVerb} To create a simple pair of Triangles linked into a quad first add the 4 vertices to the TriMesh using \a appendVertex() and then
+ add the vertices using the \a appendTriangle() method and passing the indices of the 3 vertices you want to connect
+
+ Trimesh mesh;
+ mesh.appendVertex(Vec3f(10, 10, 0 )); // appends the vertex
+ mesh.appendColorRGB( Color(1, 0, 0) ); // sets the color for the vertex to red
+ mesh.appendVertex( Vec3f(10, 100, 0) ); // appends the next vertex
+ mesh.appendColorRGB( Color( 0, 1, 0 ) ); // sets the color for the next vertex to green
+ mesh.appendVertex( Vec3f(100, 100, 0) );
+ mesh.appendColorRGB( Color(  0, 1, 0 ) );
+ mesh.appendVertex( Vec3f(100, 10, 0 ));
+ mesh.appendColorRGB( Color( 1, 0, 0 ) );
+\end{DoxyVerb}
+
+
+get the index of the vertex. not necessary with this example, but good practice int v\-Idx0 = mesh.\-get\-Num\-Vertices() -\/ 4; int v\-Idx1 = mesh.\-get\-Num\-Vertices() -\/ 3; int v\-Idx2 = mesh.\-get\-Num\-Vertices() -\/ 2; int v\-Idx3 = mesh.\-get\-Num\-Vertices() -\/ 1;
+
+now create the triangles from the vertices mesh.\-append\-Triangle( v\-Idx0, v\-Idx1, v\-Idx2 ); mesh.\-append\-Triangle( v\-Idx0, v\-Idx2, v\-Idx3 );
+
+
+\begin{DoxyCodeInclude}
+\end{DoxyCodeInclude}
+ 
